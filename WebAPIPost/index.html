@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-1.12.3.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script type="text/javascript">
+        var dataToSent = { data: "Hello World", data2: "{30587227-4377-400b-b659-231d7d838ae0}" };
+        var app = angular.module("main", []);
+
+        app.controller("MainController", function ($http, $scope) {
+            $http.post("/Home/SimpleModelBinding", dataToSent)
+                .success(function (result) {
+                    $scope.simpleResult = result;
+                });
+            $http.post("/Home/ComplexModelBinding", dataToSent)
+             .success(function (result) {
+                 $scope.complexResult = result;
+             });
+        });
+
+        $(function () {
+            $.post("/Home/SimpleModelBinding", dataToSent, function (result) {
+                $("body").append($("<p>Jquery - Simple Model Binding - " + result + "</p>"));
+            });
+            $.post("/Home/ComplexModelBinding", dataToSent, function (result) {
+                $("body").append($("<p>Jquery - Complex Model Binding -" + result + "</p>"));
+            });
+
+            $.ajax({
+                url: "/Home/SimpleModelBinding",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(dataToSent),
+                success: function (result) {
+                    $("body").append($("<p>Jquery - Simple Model Binding -" + result + "</p>"));
+                }
+            });
+
+            $.ajax({
+                url: "/Home/ComplexModelBinding",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(dataToSent),
+                success: function (result) {
+                    $("body").append($("<p>Jquery - Complex Model Binding -" + result + "</p>"));
+                }
+            });
+        });
+    </script>
+
+</head>
+<body ng-app="main">
+    <div ng-controller="MainController">
+        <p ng-show="simpleResult">Angular - Simple Model Binding -  {{simpleResult}}</p>
+        <p ng-show="complexResult">Angular - Complex Model Binding - {{complexResult}}</p>
+    </div>
+</body>
+</html>
