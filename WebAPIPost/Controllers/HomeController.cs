@@ -10,24 +10,18 @@ namespace WebAPIPost.Controllers
     public class HomeController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult SimpleModelBinding2(string data, int data2)
-        {
-            return Ok($"{data}  {data2} {Request.Content.Headers.ContentType}");
-        }
-
-        [HttpPost]
         public IHttpActionResult SimpleModelBinding(string data, Guid? data2)
         {
             return Ok($"{data}  {data2} {Request.Content.Headers.ContentType}");
         }
 
         [HttpPost]
-        public IHttpActionResult ComplexModelBinding(MyClass t)
+        public IHttpActionResult ComplexModelBinding(ComplexModel model)
         {
-            return Ok($"{t.data}  {t.data2} {Request.Content.Headers.ContentType}");
+            return Ok($"{model.data}  {model.data2} {Request.Content.Headers.ContentType}");
         }
 
-        public class MyClass
+        public class ComplexModel
         {
             public string data { get; set; }
             public Guid? data2 { get; set; }
