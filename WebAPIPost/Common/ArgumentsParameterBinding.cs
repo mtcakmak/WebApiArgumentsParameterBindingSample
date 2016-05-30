@@ -65,8 +65,10 @@ namespace WebAPIPost.Common
             // Set the binding result here
             SetValue(actionContext, value);
 
-            //// now, we can return a completed task with no result
-            return Task.CompletedTask;
+            // now, we can return a completed task with no result 
+            TaskCompletionSource<AsyncVoid> tcs = new TaskCompletionSource<AsyncVoid>();
+            tcs.SetResult(default(AsyncVoid));
+            return tcs.Task;
         }
 
 
